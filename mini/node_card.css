@@ -1,0 +1,68 @@
+.markdown-pdf-mini-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 72px;
+  padding: 12px 13px;
+  border: 1px solid rgba(185, 28, 28, 0.22);
+  border-radius: 14px;
+  background: #fff8f8;
+  color: #172033;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.markdown-pdf-mini-card:focus-visible {
+  outline: 3px solid rgba(185, 28, 28, 0.18);
+  outline-offset: 2px;
+}
+
+.markdown-pdf-mini-icon {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 12px;
+  background: #feecec;
+  color: #b91c1c;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.markdown-pdf-mini-copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.markdown-pdf-mini-copy strong {
+  overflow-wrap: anywhere;
+}
+
+.markdown-pdf-mini-copy small,
+.markdown-pdf-mini-meta {
+  color: #b91c1c;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.markdown-pdf-mini-meta {
+  justify-self: end;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #feecec;
+  white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .markdown-pdf-mini-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .markdown-pdf-mini-meta {
+    display: none;
+  }
+}

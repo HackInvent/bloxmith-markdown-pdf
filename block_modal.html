@@ -1,0 +1,70 @@
+<div class="block-modal markdown-pdf-modal" data-block-modal data-block-runtime-refresh="autonomous" data-node-id="{{ node_id }}" data-node-kind="{{ node_kind }}">
+  <div class="block-modal-header">
+    <div>
+      <div class="block-modal-kicker">{{ node_kind_title }}</div>
+      <h2>{{ node_title }}</h2>
+    </div>
+    <button type="button" class="icon-btn" data-block-modal-close aria-label="Fermer">×</button>
+  </div>
+
+  <div class="block-modal-tabs" role="tablist">
+    <button type="button" class="block-modal-tab is-active" data-block-modal-tab="attributes" role="tab">Attributs</button>
+    <button type="button" class="block-modal-tab" data-block-modal-tab="ports" role="tab">Ports</button>
+    <button type="button" class="block-modal-tab" data-block-modal-tab="runtime" role="tab">Runtime</button>
+  </div>
+
+  <section class="block-modal-panel is-active" data-block-modal-panel="attributes" role="tabpanel">
+    {{ title_field_html }}
+
+    <div class="field-group">
+      <label>Fichier PDF de sortie</label>
+      <input data-block-config-field="output_path" type="text" value="{{ output_path }}" placeholder="exports/tmp.pdf" autocomplete="off" spellcheck="false" />
+      <small>Le chemin est resolu dans le repertoire du projet.</small>
+    </div>
+
+    <div class="field-grid two">
+      <div class="field-group">
+        <label>Format Markdown</label>
+        <input data-block-config-field="from_format" type="text" value="{{ from_format }}" placeholder="markdown" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="field-group">
+        <label>Papier</label>
+        <select data-block-config-field="paper_size">
+          <option value="a4" {{ paper_size_a4_selected }}>A4</option>
+          <option value="letter" {{ paper_size_letter_selected }}>Letter</option>
+          <option value="a3" {{ paper_size_a3_selected }}>A3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-grid two">
+      <div class="field-group">
+        <label>Marge</label>
+        <input data-block-config-field="margin" type="text" value="{{ margin }}" placeholder="20mm" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="field-group">
+        <label>Timeout</label>
+        <input data-block-config-field="timeout_sec" data-block-value-type="integer" type="number" min="1" max="3600" step="1" value="{{ timeout_sec }}" />
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Titre metadata</label>
+      <input data-block-config-field="metadata_title" type="text" value="{{ metadata_title }}" placeholder="Optionnel" autocomplete="off" />
+    </div>
+
+    <label class="checkbox-line">
+      <input data-block-config-field="toc" data-block-value-type="boolean" type="checkbox" {{ toc_checked }} />
+      <span>Generer un sommaire</span>
+    </label>
+  </section>
+
+  <section class="block-modal-panel" data-block-modal-panel="ports" role="tabpanel">
+    {{ ports_html }}
+  </section>
+
+  <section class="block-modal-panel" data-block-modal-panel="runtime" role="tabpanel">
+    {{ runtime_html }}
+    {{ error_html }}
+  </section>
+</div>

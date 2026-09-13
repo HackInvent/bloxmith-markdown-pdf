@@ -1,0 +1,89 @@
+<div class="cw-block-inspector cw-markdown-pdf-inspector" data-block-inspector-root data-node-id="{{ node_id }}" data-node-type="{{ node_type }}">
+  <div class="inspector-summary" {{ summary_hidden }}>
+    <div class="inspector-summary-icon">{{ node_icon }}</div>
+    <div>
+      <div class="inspector-summary-kind">{{ node_kind }}</div>
+      <div class="inspector-summary-tag">{{ node_tag }}</div>
+    </div>
+  </div>
+
+  <div class="inspector-tabs">
+    <button type="button" class="inspector-tab {{ general_active }}" data-inspector-tab="general">Attributs</button>
+    <button type="button" class="inspector-tab {{ ports_active }}" data-inspector-tab="ports" {{ ports_tab_disabled }} {{ ports_tab_hidden }}>Ports</button>
+  </div>
+
+  <section class="inspector-panel-tab {{ general_active }}" data-inspector-panel-tab="general" {{ general_hidden }}>
+    <div class="field-group" {{ title_hidden }}>
+      <label>Nom du bloc</label>
+      <input data-node-title-input type="text" value="{{ node_title }}" placeholder="{{ node_title_placeholder }}" autocomplete="off" />
+    </div>
+
+    <div class="field-group">
+      <label>Fichier PDF de sortie</label>
+      <input data-block-config-field="output_path" type="text" value="{{ output_path }}" placeholder="exports/tmp.pdf" autocomplete="off" spellcheck="false" />
+      <small>Chemin relatif au projet. L'extension .pdf est ajoutee si besoin.</small>
+    </div>
+
+    <div class="field-grid two">
+      <div class="field-group">
+        <label>Format Markdown</label>
+        <input data-block-config-field="from_format" type="text" value="{{ from_format }}" placeholder="markdown" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="field-group">
+        <label>Papier</label>
+        <select data-block-config-field="paper_size">
+          <option value="a4" {{ paper_size_a4_selected }}>A4</option>
+          <option value="letter" {{ paper_size_letter_selected }}>Letter</option>
+          <option value="a3" {{ paper_size_a3_selected }}>A3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-grid two">
+      <div class="field-group">
+        <label>Marge</label>
+        <input data-block-config-field="margin" type="text" value="{{ margin }}" placeholder="20mm" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="field-group">
+        <label>Timeout</label>
+        <input data-block-config-field="timeout_sec" data-block-value-type="integer" type="number" min="1" max="3600" step="1" value="{{ timeout_sec }}" />
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Titre metadata</label>
+      <input data-block-config-field="metadata_title" type="text" value="{{ metadata_title }}" placeholder="Optionnel" autocomplete="off" />
+    </div>
+
+    <label class="checkbox-line">
+      <input data-block-config-field="toc" data-block-value-type="boolean" type="checkbox" {{ toc_checked }} />
+      <span>Generer un sommaire</span>
+    </label>
+
+    <div class="inspector-actions">
+      <button type="button" class="solid-btn" data-block-apply disabled>Appliquer</button>
+    </div>
+  </section>
+
+  <section class="inspector-panel-tab {{ ports_active }}" data-inspector-panel-tab="ports" {{ ports_hidden }}>
+    <div class="ports-editor-section">
+      <div class="ports-editor-header">
+        <span class="group-label">Entrees</span>
+        <button type="button" class="ghost-btn add-port-btn {{ add_input_hidden }}" data-add-input-port {{ add_input_disabled }}>Ajouter</button>
+      </div>
+      <div class="ports-editor-list">{{ inputs_html }}</div>
+    </div>
+    <div class="ports-editor-section">
+      <div class="ports-editor-header">
+        <span class="group-label">Sorties</span>
+        <button type="button" class="ghost-btn add-port-btn {{ add_output_hidden }}" data-add-output-port {{ add_output_disabled }}>Ajouter</button>
+      </div>
+      <div class="ports-editor-list">{{ outputs_html }}</div>
+    </div>
+  </section>
+
+  <div class="inspector-actions" {{ actions_hidden }}>
+    <button type="button" class="ghost-btn {{ duplicate_hidden }}" data-block-action="duplicate">Dupliquer</button>
+    <button type="button" class="danger-btn {{ delete_hidden }}" data-block-action="delete">Supprimer</button>
+  </div>
+</div>
