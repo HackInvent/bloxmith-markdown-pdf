@@ -4,7 +4,7 @@
       <div class="block-modal-kicker">{{ node_kind_title }}</div>
       <h2>{{ node_title }}</h2>
     </div>
-    <button type="button" class="icon-btn" data-block-modal-close aria-label="Fermer">×</button>
+    <button type="button" class="icon-btn" data-block-modal-close aria-label="Close">×</button>
   </div>
 
   <div class="block-modal-tabs" role="tablist">
@@ -17,9 +17,9 @@
     {{ title_field_html }}
 
     <div class="field-group">
-      <label>Fichier PDF de sortie</label>
+      <label>Output PDF file</label>
       <input data-block-config-field="output_path" type="text" value="{{ output_path }}" placeholder="exports/tmp.pdf" autocomplete="off" spellcheck="false" />
-      <small>Le chemin est resolu dans le repertoire du projet.</small>
+      <small>The path is resolved inside the project directory.</small>
     </div>
 
     <div class="field-grid two">

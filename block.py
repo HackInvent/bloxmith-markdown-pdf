@@ -164,7 +164,7 @@ class MarkdownPdfBlock(BlockDefinition):
 
         pandoc_binary = shutil.which("pandoc")
         if not pandoc_binary:
-            error = "Pandoc est requis pour generer le PDF. Installez pandoc et un moteur PDF compatible."
+            error = "Pandoc is required to generate the PDF. Install pandoc and a compatible PDF engine."
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, metadata={"reason": "pandoc_required"})
 
@@ -194,7 +194,7 @@ class MarkdownPdfBlock(BlockDefinition):
                 check=False,
             )
         except subprocess.TimeoutExpired:
-            error = f"Pandoc a depasse le timeout de {config['timeout_sec']}s."
+            error = f"Pandoc exceeded the {config['timeout_sec']}s timeout."
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, exit_code=124, metadata={"reason": "timeout"})
         except OSError as exc:
@@ -210,11 +210,11 @@ class MarkdownPdfBlock(BlockDefinition):
         if completed.stderr.strip():
             logs.append(completed.stderr.strip())
         if completed.returncode != 0:
-            error = f"Pandoc a echoue avec le code {completed.returncode}."
+            error = f"Pandoc failed with code {completed.returncode}."
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, exit_code=completed.returncode, metadata={"reason": "pandoc_failed"})
         if not output_path.is_file() or output_path.stat().st_size <= 0:
-            error = "Pandoc n'a pas produit de fichier PDF exploitable."
+            error = "Pandoc did not produce a usable PDF file."
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, metadata={"reason": "missing_pdf"})
 
@@ -359,7 +359,7 @@ class MarkdownPdfBlock(BlockDefinition):
         try:
             resolved.relative_to(root)
         except ValueError as exc:
-            raise MarkdownPdfBlockError("Le chemin PDF doit rester dans le repertoire du projet.") from exc
+            raise MarkdownPdfBlockError("The PDF path must stay inside the project directory.") from exc
         if resolved.name in {"", ".", ".."}:
             raise MarkdownPdfBlockError("Le chemin PDF doit contenir un nom de fichier.")
         if resolved.suffix.lower() != ".pdf":

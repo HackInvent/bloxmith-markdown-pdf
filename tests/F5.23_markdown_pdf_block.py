@@ -152,38 +152,38 @@ def markdown_pdf_document(*, output_path: str) -> dict:
 def main() -> None:
     block = get_block_definition("markdown_pdf")
     node = block.build_node_payload(node_id="markdown-pdf-ui")
-    expect(node["config"]["output_path"] == "exports/tmp.pdf", "La sortie PDF par defaut doit etre exports/tmp.pdf.")
+    expect(node["config"]["output_path"] == "exports/tmp.pdf", "The default PDF output must be exports/tmp.pdf.")
 
     card = block.render_node_card(node=node)
-    expect("exports/tmp.pdf" in card["html"], "La node-card doit afficher le chemin PDF.")
+    expect("exports/tmp.pdf" in card["html"], "The node card must show the PDF path.")
     mini_card = block.render_mini_node_card(node=node)
-    expect("data-markdown-pdf-mini-card" in mini_card["html"], "La mini-card Markdown PDF doit venir du bloc.")
-    expect("Toucher pour visualiser" in mini_card["html"], "La mini-card doit exposer l'action compacte de visualisation.")
+    expect("data-markdown-pdf-mini-card" in mini_card["html"], "The Markdown PDF mini card must come from the block.")
+    expect("Toucher pour visualiser" in mini_card["html"], "The mini card must expose the compact preview action.")
     inspector = block.render_inspector_panel(node=node)
     expect('data-block-config-field="output_path"' in inspector["html"], "L'inspector doit editer output_path.")
-    expect('data-block-config-field="toc"' in inspector["html"], "L'inspector doit editer le sommaire.")
+    expect('data-block-config-field="toc"' in inspector["html"], "The inspector must edit the table of contents.")
     modal = block.render_modal(node=node)
     modal_assets = {(asset.get("kind"), asset.get("path")) for asset in block.ui_assets("modal")}
-    expect("exports/tmp.pdf" in modal["html"], "Le modal doit afficher le chemin par defaut.")
-    expect('data-block-runtime-refresh="autonomous"' in modal["html"], "Le modal Markdown PDF doit gérer son refresh runtime.")
-    expect('data-block-config-field="paper_size"' in modal["html"], "Le modal doit editer le papier.")
+    expect("exports/tmp.pdf" in modal["html"], "The modal must show the default path.")
+    expect('data-block-runtime-refresh="autonomous"' in modal["html"], "The Markdown PDF modal must own its runtime refresh.")
+    expect('data-block-config-field="paper_size"' in modal["html"], "The modal must edit the paper size.")
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         root_dir = Path(tmp_dir)
         with no_pandoc_cli():
             missing = block.execute_runtime(runtime_context(root_dir))
-        expect(missing.status == "failed", "Sans pandoc, le bloc doit echouer proprement.")
-        expect("Pandoc est requis" in missing.error, "L'erreur doit mentionner la dependance Pandoc.")
+        expect(missing.status == "failed", "Without pandoc, the block must fail cleanly.")
+        expect("Pandoc is required" in missing.error, "The error must mention the Pandoc dependency.")
 
         with fake_pandoc_cli():
             result = block.execute_runtime(runtime_context(root_dir))
-        expect(result.status == "success", "Avec pandoc, le bloc doit produire un PDF.")
-        expect(result.outputs and result.outputs[0].content_type == "file/path", "La sortie doit etre un chemin de fichier.")
-        expect((root_dir / "exports/tmp.pdf").read_bytes() == PDF_BYTES, "Le PDF doit etre ecrit au chemin par defaut.")
+        expect(result.status == "success", "With pandoc, the block must produce a PDF.")
+        expect(result.outputs and result.outputs[0].content_type == "file/path", "The output must be a file path.")
+        expect((root_dir / "exports/tmp.pdf").read_bytes() == PDF_BYTES, "The PDF must be written to the default path.")
 
     with fake_pandoc_cli():
         with isolated_server() as server:
-            # Les surfaces sont des assets de release : le bundled kind n'en sert aucun.
+            # Surfaces are release assets: a bundled kind serves none of them.
             model = install_test_package(server, "markdown_pdf")
             key = quote(release_key(model), safe="")
             served = lambda payload, suffix: next(
@@ -192,9 +192,9 @@ def main() -> None:
                 output_path = f"exports/{runtime_mode}-tmp.pdf"
                 created = create_run_api(server, markdown_pdf_document(output_path=output_path), runtime_mode=runtime_mode)
                 run = wait_for_run_terminal(server, str(created.get("run_id") or ""), timeout_sec=20)
-                expect(run.get("status") == "success", f"Le run Markdown PDF doit reussir en {runtime_mode}.")
+                expect(run.get("status") == "success", f"The Markdown PDF run must succeed in {runtime_mode}.")
                 generated = server.root_dir / output_path
-                expect(generated.read_bytes() == PDF_BYTES, f"Le PDF doit etre genere en {runtime_mode}.")
+                expect(generated.read_bytes() == PDF_BYTES, f"The PDF must be generated in {runtime_mode}.")
 
 
 if __name__ == "__main__":

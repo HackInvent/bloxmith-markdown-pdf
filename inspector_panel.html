@@ -14,14 +14,14 @@
 
   <section class="inspector-panel-tab {{ general_active }}" data-inspector-panel-tab="general" {{ general_hidden }}>
     <div class="field-group" {{ title_hidden }}>
-      <label>Nom du bloc</label>
+      <label>Block name</label>
       <input data-node-title-input type="text" value="{{ node_title }}" placeholder="{{ node_title_placeholder }}" autocomplete="off" />
     </div>
 
     <div class="field-group">
-      <label>Fichier PDF de sortie</label>
+      <label>Output PDF file</label>
       <input data-block-config-field="output_path" type="text" value="{{ output_path }}" placeholder="exports/tmp.pdf" autocomplete="off" spellcheck="false" />
-      <small>Chemin relatif au projet. L'extension .pdf est ajoutee si besoin.</small>
+      <small>Path relative to the project. The .pdf extension is added when needed.</small>
     </div>
 
     <div class="field-grid two">
@@ -61,21 +61,21 @@
     </label>
 
     <div class="inspector-actions">
-      <button type="button" class="solid-btn" data-block-apply disabled>Appliquer</button>
+      <button type="button" class="solid-btn" data-block-apply disabled>Apply</button>
     </div>
   </section>
 
   <section class="inspector-panel-tab {{ ports_active }}" data-inspector-panel-tab="ports" {{ ports_hidden }}>
     <div class="ports-editor-section">
       <div class="ports-editor-header">
-        <span class="group-label">Entrees</span>
+        <span class="group-label">Inputs</span>
         <button type="button" class="ghost-btn add-port-btn {{ add_input_hidden }}" data-add-input-port {{ add_input_disabled }}>Ajouter</button>
       </div>
       <div class="ports-editor-list">{{ inputs_html }}</div>
     </div>
     <div class="ports-editor-section">
       <div class="ports-editor-header">
-        <span class="group-label">Sorties</span>
+        <span class="group-label">Outputs</span>
         <button type="button" class="ghost-btn add-port-btn {{ add_output_hidden }}" data-add-output-port {{ add_output_disabled }}>Ajouter</button>
       </div>
       <div class="ports-editor-list">{{ outputs_html }}</div>
@@ -83,7 +83,7 @@
   </section>
 
   <div class="inspector-actions" {{ actions_hidden }}>
-    <button type="button" class="ghost-btn {{ duplicate_hidden }}" data-block-action="duplicate">Dupliquer</button>
-    <button type="button" class="danger-btn {{ delete_hidden }}" data-block-action="delete">Supprimer</button>
+    <button type="button" class="ghost-btn {{ duplicate_hidden }}" data-block-action="duplicate">Duplicate</button>
+    <button type="button" class="danger-btn {{ delete_hidden }}" data-block-action="delete">Delete</button>
   </div>
 </div>
