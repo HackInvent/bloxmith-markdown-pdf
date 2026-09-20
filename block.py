@@ -158,7 +158,7 @@ class MarkdownPdfBlock(BlockDefinition):
         logs = [f"[markdown-pdf] {context.node_id}: output={config['output_path']} format={config['from_format']}."]
         markdown = self._runtime_markdown(context)
         if not markdown.strip():
-            error = "Aucun Markdown recu sur l'entree du bloc."
+            error = "No Markdown received on the block input."
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, metadata={"reason": "empty_markdown"})
 
@@ -361,7 +361,7 @@ class MarkdownPdfBlock(BlockDefinition):
         except ValueError as exc:
             raise MarkdownPdfBlockError("The PDF path must stay inside the project directory.") from exc
         if resolved.name in {"", ".", ".."}:
-            raise MarkdownPdfBlockError("Le chemin PDF doit contenir un nom de fichier.")
+            raise MarkdownPdfBlockError("The PDF path must contain a file name.")
         if resolved.suffix.lower() != ".pdf":
             resolved = resolved.with_suffix(".pdf")
         return resolved
