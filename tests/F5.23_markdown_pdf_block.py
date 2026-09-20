@@ -34,6 +34,8 @@ if str(TESTS_DIR) not in sys.path:
 from blocs import get_block_definition
 from bloxsmith_app.block_runtime import BlockRuntimeContext
 from ui_smoke_common import create_run_api, data_edge, expect, graph_payload, isolated_server, text_node, wait_for_run_terminal
+from urllib.parse import quote
+from block_test_packages import install_test_package, release_key, surface_payload
 
 
 PDF_BYTES = b"%PDF-1.4\n% fake pandoc output\n"
@@ -165,7 +167,6 @@ def main() -> None:
     expect("exports/tmp.pdf" in modal["html"], "Le modal doit afficher le chemin par defaut.")
     expect('data-block-runtime-refresh="autonomous"' in modal["html"], "Le modal Markdown PDF doit gérer son refresh runtime.")
     expect('data-block-config-field="paper_size"' in modal["html"], "Le modal doit editer le papier.")
-    expect(("js", "assets/js/block_modal.js") in modal_assets, "Le modal Markdown PDF doit declarer son JS block-owned.")
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         root_dir = Path(tmp_dir)
@@ -182,6 +183,11 @@ def main() -> None:
 
     with fake_pandoc_cli():
         with isolated_server() as server:
+            # Les surfaces sont des assets de release : le bundled kind n'en sert aucun.
+            model = install_test_package(server, "markdown_pdf")
+            key = quote(release_key(model), safe="")
+            served = lambda payload, suffix: next(
+                asset["path"] for asset in payload["assets"] if asset["path"].endswith(suffix))
             for runtime_mode in ("centralized", "zeromq_active"):
                 output_path = f"exports/{runtime_mode}-tmp.pdf"
                 created = create_run_api(server, markdown_pdf_document(output_path=output_path), runtime_mode=runtime_mode)

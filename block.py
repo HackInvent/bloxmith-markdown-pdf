@@ -59,25 +59,6 @@ class MarkdownPdfBlock(BlockDefinition):
 
     kind = "markdown_pdf"
 
-    def ui_assets(self, surface: str = "modal") -> list[dict[str, str]]:
-        """Return block-owned assets for markdown PDF UI surfaces.
-
-        Args:
-            surface: UI surface requesting assets.
-
-        Returns:
-            CSS/JS assets declared for the compact card when requested.
-        """
-
-        if surface == "modal":
-            return [{"kind": "js", "path": "assets/js/block_modal.js"}]
-        if surface == "mini_node_card":
-            return [
-                {"kind": "css", "path": "mini/node_card.css"},
-                {"kind": "js", "path": "mini/node_card.js"},
-            ]
-        return []
-
     def render_node_card(self, *, node: dict[str, Any], payload: dict[str, Any] | None = None) -> dict[str, Any]:
         """Render the compact graph card with the configured PDF target."""
 

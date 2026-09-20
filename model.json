@@ -1,7 +1,9 @@
 {
   "kind": "markdown_pdf",
   "version": "0.1.0",
-  "bloxsmith_compatibility": ["1.0.9"],
+  "bloxsmith_compatibility": [
+    "1.0.9"
+  ],
   "tested_with_bloxsmith": "1.0.9",
   "title": "Markdown PDF",
   "description": "Convertit une entree Markdown en PDF avec Pandoc.",
@@ -53,5 +55,23 @@
     "active_worker": true,
     "centralized_executor": "generic",
     "centralized_dependency_mode": "all_inputs"
+  },
+  "ui_assets": {
+    "modal": [
+      {
+        "kind": "js",
+        "path": "assets/js/block_modal.js"
+      }
+    ],
+    "mini_node_card": [
+      {
+        "kind": "css",
+        "path": "mini/node_card.css"
+      },
+      {
+        "kind": "js",
+        "path": "mini/node_card.js"
+      }
+    ]
   }
 }
