@@ -158,7 +158,8 @@ class MarkdownPdfBlock(BlockDefinition):
         logs = [f"[markdown-pdf] {context.node_id}: output={config['output_path']} format={config['from_format']}."]
         markdown = self._runtime_markdown(context)
         if not markdown.strip():
-            error = "No Markdown received on the block input."
+            error = self.translate("block.markdown_pdf.error_no_markdown",
+                fallback="No Markdown received on the block input.")
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, metadata={"reason": "empty_markdown"})
 
@@ -198,7 +199,7 @@ class MarkdownPdfBlock(BlockDefinition):
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, exit_code=124, metadata={"reason": "timeout"})
         except OSError as exc:
-            error = f"Execution Pandoc impossible: {exc}"
+            error = f"Pandoc execution failed: {exc}"
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
             return self._failed(error, logs, metadata={"reason": "pandoc_os_error"})
         finally:
@@ -220,7 +221,7 @@ class MarkdownPdfBlock(BlockDefinition):
 
         size = output_path.stat().st_size
         display_path = self._relative_path(context.root_dir, output_path)
-        logs.append(f"[done] Markdown PDF {context.node_id}: fichier ecrit {display_path} ({size} octets).")
+        logs.append(f"[done] Markdown PDF {context.node_id}: file written {display_path} ({size} bytes).")
         output_ports = tuple(context.output_ports or ())
         if not output_ports:
             output_ports = (SimpleNamespace(id=1, name="pdf"),)
@@ -361,7 +362,8 @@ class MarkdownPdfBlock(BlockDefinition):
         except ValueError as exc:
             raise MarkdownPdfBlockError("The PDF path must stay inside the project directory.") from exc
         if resolved.name in {"", ".", ".."}:
-            raise MarkdownPdfBlockError("The PDF path must contain a file name.")
+            raise MarkdownPdfBlockError(self.translate("block.markdown_pdf.error_path_without_name",
+                fallback="The PDF path must contain a file name."))
         if resolved.suffix.lower() != ".pdf":
             resolved = resolved.with_suffix(".pdf")
         return resolved

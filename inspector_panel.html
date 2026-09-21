@@ -9,28 +9,28 @@
 
   <div class="inspector-tabs">
     <button type="button" class="inspector-tab {{ general_active }}" data-inspector-tab="general">Attributs</button>
-    <button type="button" class="inspector-tab {{ ports_active }}" data-inspector-tab="ports" {{ ports_tab_disabled }} {{ ports_tab_hidden }}>Ports</button>
+    <button type="button" class="inspector-tab {{ ports_active }}" data-inspector-tab="ports" {{ ports_tab_disabled }} {{ ports_tab_hidden }} data-i18n="ui.block_kit.ports">Ports</button>
   </div>
 
   <section class="inspector-panel-tab {{ general_active }}" data-inspector-panel-tab="general" {{ general_hidden }}>
     <div class="field-group" {{ title_hidden }}>
-      <label>Block name</label>
+      <label data-i18n="ui.block_kit.block_name">Block name</label>
       <input data-node-title-input type="text" value="{{ node_title }}" placeholder="{{ node_title_placeholder }}" autocomplete="off" />
     </div>
 
     <div class="field-group">
-      <label>Output PDF file</label>
+      <label data-i18n="block.markdown_pdf.output_label">Output PDF file</label>
       <input data-block-config-field="output_path" type="text" value="{{ output_path }}" placeholder="exports/tmp.pdf" autocomplete="off" spellcheck="false" />
-      <small>Path relative to the project. The .pdf extension is added when needed.</small>
+      <small data-i18n="block.markdown_pdf.output_hint_inspector">Path relative to the project. The .pdf extension is added when needed.</small>
     </div>
 
     <div class="field-grid two">
       <div class="field-group">
-        <label>Format Markdown</label>
+        <label data-i18n="block.markdown_pdf.from_format_label">Markdown format</label>
         <input data-block-config-field="from_format" type="text" value="{{ from_format }}" placeholder="markdown" autocomplete="off" spellcheck="false" />
       </div>
       <div class="field-group">
-        <label>Papier</label>
+        <label data-i18n="block.markdown_pdf.paper_label">Paper</label>
         <select data-block-config-field="paper_size">
           <option value="a4" {{ paper_size_a4_selected }}>A4</option>
           <option value="letter" {{ paper_size_letter_selected }}>Letter</option>
@@ -41,49 +41,49 @@
 
     <div class="field-grid two">
       <div class="field-group">
-        <label>Marge</label>
+        <label data-i18n="block.markdown_pdf.margin_label">Margin</label>
         <input data-block-config-field="margin" type="text" value="{{ margin }}" placeholder="20mm" autocomplete="off" spellcheck="false" />
       </div>
       <div class="field-group">
-        <label>Timeout</label>
+        <label data-i18n="block.markdown_pdf.timeout_label">Timeout</label>
         <input data-block-config-field="timeout_sec" data-block-value-type="integer" type="number" min="1" max="3600" step="1" value="{{ timeout_sec }}" />
       </div>
     </div>
 
     <div class="field-group">
-      <label>Titre metadata</label>
-      <input data-block-config-field="metadata_title" type="text" value="{{ metadata_title }}" placeholder="Optionnel" autocomplete="off" />
+      <label data-i18n="block.markdown_pdf.metadata_title_label">Metadata title</label>
+      <input data-block-config-field="metadata_title" type="text" value="{{ metadata_title }}" placeholder="Optional" data-i18n-placeholder="block.markdown_pdf.metadata_title_placeholder" autocomplete="off" />
     </div>
 
     <label class="checkbox-line">
       <input data-block-config-field="toc" data-block-value-type="boolean" type="checkbox" {{ toc_checked }} />
-      <span>Generer un sommaire</span>
+      <span data-i18n="block.markdown_pdf.toc_label">Generate a table of contents</span>
     </label>
 
     <div class="inspector-actions">
-      <button type="button" class="solid-btn" data-block-apply disabled>Apply</button>
+      <button type="button" class="solid-btn" data-block-apply disabled data-i18n="ui.block_kit.apply">Apply</button>
     </div>
   </section>
 
   <section class="inspector-panel-tab {{ ports_active }}" data-inspector-panel-tab="ports" {{ ports_hidden }}>
     <div class="ports-editor-section">
       <div class="ports-editor-header">
-        <span class="group-label">Inputs</span>
-        <button type="button" class="ghost-btn add-port-btn {{ add_input_hidden }}" data-add-input-port {{ add_input_disabled }}>Ajouter</button>
+        <span class="group-label" data-i18n="ui.block_kit.inputs">Inputs</span>
+        <button type="button" class="ghost-btn add-port-btn {{ add_input_hidden }}" data-add-input-port {{ add_input_disabled }} data-i18n="ui.block_kit.add_input">+ Add an input</button>
       </div>
       <div class="ports-editor-list">{{ inputs_html }}</div>
     </div>
     <div class="ports-editor-section">
       <div class="ports-editor-header">
-        <span class="group-label">Outputs</span>
-        <button type="button" class="ghost-btn add-port-btn {{ add_output_hidden }}" data-add-output-port {{ add_output_disabled }}>Ajouter</button>
+        <span class="group-label" data-i18n="ui.block_kit.outputs">Outputs</span>
+        <button type="button" class="ghost-btn add-port-btn {{ add_output_hidden }}" data-add-output-port {{ add_output_disabled }} data-i18n="ui.block_kit.add_output">+ Add an output</button>
       </div>
       <div class="ports-editor-list">{{ outputs_html }}</div>
     </div>
   </section>
 
   <div class="inspector-actions" {{ actions_hidden }}>
-    <button type="button" class="ghost-btn {{ duplicate_hidden }}" data-block-action="duplicate">Duplicate</button>
+    <button type="button" class="ghost-btn {{ duplicate_hidden }}" data-block-action="duplicate" data-i18n="ui.block_kit.duplicate">Duplicate</button>
     <button type="button" class="danger-btn {{ delete_hidden }}" data-block-action="delete">Delete</button>
   </div>
 </div>

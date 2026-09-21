@@ -1,0 +1,20 @@
+{
+  "block.markdown_pdf.model.title": "Markdown PDF",
+  "block.markdown_pdf.model.description": "Converts a Markdown input into a PDF with Pandoc.",
+  "block.markdown_pdf.pill": "PDF",
+  "block.markdown_pdf.tab_attributes": "Attributes",
+  "block.markdown_pdf.tab_runtime": "Runtime",
+  "block.markdown_pdf.output_label": "Output PDF file",
+  "block.markdown_pdf.output_hint_modal": "The path is resolved inside the project directory.",
+  "block.markdown_pdf.output_hint_inspector": "Path relative to the project. The .pdf extension is added when needed.",
+  "block.markdown_pdf.from_format_label": "Markdown format",
+  "block.markdown_pdf.paper_label": "Paper",
+  "block.markdown_pdf.margin_label": "Margin",
+  "block.markdown_pdf.timeout_label": "Timeout",
+  "block.markdown_pdf.metadata_title_label": "Metadata title",
+  "block.markdown_pdf.metadata_title_placeholder": "Optional",
+  "block.markdown_pdf.toc_label": "Generate a table of contents",
+  "block.markdown_pdf.add_port": "Add",
+  "block.markdown_pdf.error_no_markdown": "No Markdown received on the block input.",
+  "block.markdown_pdf.error_path_without_name": "The PDF path must contain a file name."
+}

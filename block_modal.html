@@ -8,27 +8,27 @@
   </div>
 
   <div class="block-modal-tabs" role="tablist">
-    <button type="button" class="block-modal-tab is-active" data-block-modal-tab="attributes" role="tab">Attributs</button>
-    <button type="button" class="block-modal-tab" data-block-modal-tab="ports" role="tab">Ports</button>
-    <button type="button" class="block-modal-tab" data-block-modal-tab="runtime" role="tab">Runtime</button>
+    <button type="button" class="block-modal-tab is-active" data-block-modal-tab="attributes" role="tab" data-i18n="block.markdown_pdf.tab_attributes">Attributes</button>
+    <button type="button" class="block-modal-tab" data-block-modal-tab="ports" role="tab" data-i18n="ui.block_kit.ports">Ports</button>
+    <button type="button" class="block-modal-tab" data-block-modal-tab="runtime" role="tab" data-i18n="block.markdown_pdf.tab_runtime">Runtime</button>
   </div>
 
   <section class="block-modal-panel is-active" data-block-modal-panel="attributes" role="tabpanel">
     {{ title_field_html }}
 
     <div class="field-group">
-      <label>Output PDF file</label>
+      <label data-i18n="block.markdown_pdf.output_label">Output PDF file</label>
       <input data-block-config-field="output_path" type="text" value="{{ output_path }}" placeholder="exports/tmp.pdf" autocomplete="off" spellcheck="false" />
-      <small>The path is resolved inside the project directory.</small>
+      <small data-i18n="block.markdown_pdf.output_hint_modal">The path is resolved inside the project directory.</small>
     </div>
 
     <div class="field-grid two">
       <div class="field-group">
-        <label>Format Markdown</label>
+        <label data-i18n="block.markdown_pdf.from_format_label">Markdown format</label>
         <input data-block-config-field="from_format" type="text" value="{{ from_format }}" placeholder="markdown" autocomplete="off" spellcheck="false" />
       </div>
       <div class="field-group">
-        <label>Papier</label>
+        <label data-i18n="block.markdown_pdf.paper_label">Paper</label>
         <select data-block-config-field="paper_size">
           <option value="a4" {{ paper_size_a4_selected }}>A4</option>
           <option value="letter" {{ paper_size_letter_selected }}>Letter</option>
@@ -39,23 +39,23 @@
 
     <div class="field-grid two">
       <div class="field-group">
-        <label>Marge</label>
+        <label data-i18n="block.markdown_pdf.margin_label">Margin</label>
         <input data-block-config-field="margin" type="text" value="{{ margin }}" placeholder="20mm" autocomplete="off" spellcheck="false" />
       </div>
       <div class="field-group">
-        <label>Timeout</label>
+        <label data-i18n="block.markdown_pdf.timeout_label">Timeout</label>
         <input data-block-config-field="timeout_sec" data-block-value-type="integer" type="number" min="1" max="3600" step="1" value="{{ timeout_sec }}" />
       </div>
     </div>
 
     <div class="field-group">
-      <label>Titre metadata</label>
-      <input data-block-config-field="metadata_title" type="text" value="{{ metadata_title }}" placeholder="Optionnel" autocomplete="off" />
+      <label data-i18n="block.markdown_pdf.metadata_title_label">Metadata title</label>
+      <input data-block-config-field="metadata_title" type="text" value="{{ metadata_title }}" placeholder="Optional" data-i18n-placeholder="block.markdown_pdf.metadata_title_placeholder" autocomplete="off" />
     </div>
 
     <label class="checkbox-line">
       <input data-block-config-field="toc" data-block-value-type="boolean" type="checkbox" {{ toc_checked }} />
-      <span>Generer un sommaire</span>
+      <span data-i18n="block.markdown_pdf.toc_label">Generate a table of contents</span>
     </label>
   </section>
 

@@ -6,8 +6,12 @@
   ],
   "tested_with_bloxsmith": "1.0.9",
   "title": "Markdown PDF",
+  "locales": {
+    "en": "locales/en.json",
+    "fr": "locales/fr.json"
+  },
   "description": "Converts a Markdown input into a PDF with Pandoc.",
-  "category": "Sorties",
+  "category": "Outputs",
   "inspector": {
     "title": "Markdown PDF"
   },

@@ -1,0 +1,20 @@
+{
+  "block.markdown_pdf.model.title": "Markdown PDF",
+  "block.markdown_pdf.model.description": "Convertit une entrée Markdown en PDF avec Pandoc.",
+  "block.markdown_pdf.pill": "PDF",
+  "block.markdown_pdf.tab_attributes": "Attributs",
+  "block.markdown_pdf.tab_runtime": "Runtime",
+  "block.markdown_pdf.output_label": "Fichier PDF de sortie",
+  "block.markdown_pdf.output_hint_modal": "Le chemin est résolu dans le répertoire du projet.",
+  "block.markdown_pdf.output_hint_inspector": "Chemin relatif au projet. L'extension .pdf est ajoutée si besoin.",
+  "block.markdown_pdf.from_format_label": "Format Markdown",
+  "block.markdown_pdf.paper_label": "Papier",
+  "block.markdown_pdf.margin_label": "Marge",
+  "block.markdown_pdf.timeout_label": "Timeout",
+  "block.markdown_pdf.metadata_title_label": "Titre metadata",
+  "block.markdown_pdf.metadata_title_placeholder": "Optionnel",
+  "block.markdown_pdf.toc_label": "Générer un sommaire",
+  "block.markdown_pdf.add_port": "Ajouter",
+  "block.markdown_pdf.error_no_markdown": "Aucun Markdown reçu sur l'entrée du bloc.",
+  "block.markdown_pdf.error_path_without_name": "Le chemin PDF doit contenir un nom de fichier."
+}
