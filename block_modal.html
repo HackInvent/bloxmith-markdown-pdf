@@ -1,10 +1,10 @@
-<div class="block-modal markdown-pdf-modal" data-block-modal data-block-runtime-refresh="autonomous" data-node-id="{{ node_id }}" data-node-kind="{{ node_kind }}">
+<div data-properties-surface="modal" class="modal-panel block-modal markdown-pdf-modal" data-block-modal data-generic-block-modal-root role="dialog" aria-modal="true" aria-labelledby="{{ node_id }}PdfModalTitle" data-block-runtime-refresh="autonomous" data-node-id="{{ node_id }}" data-node-kind="{{ node_kind }}">
   <div class="block-modal-header">
     <div>
       <div class="block-modal-kicker">{{ node_kind_title }}</div>
-      <h2>{{ node_title }}</h2>
+      <h2 id="{{ node_id }}PdfModalTitle">{{ node_title }}</h2>
     </div>
-    <button type="button" class="icon-btn" data-block-modal-close aria-label="Close">×</button>
+    <button type="button" class="ghost-btn" data-block-modal-close data-i18n="ui.block_kit.close">Close</button>
   </div>
 
   <div class="block-modal-tabs" role="tablist">
@@ -14,7 +14,10 @@
   </div>
 
   <section class="block-modal-panel is-active" data-block-modal-panel="attributes" role="tabpanel">
-    {{ title_field_html }}
+    <div class="field-group">
+      <label data-i18n="ui.block_kit.block_name">Block name</label>
+      <input data-block-title-field type="text" autocomplete="off" value="{{ node_title }}" />
+    </div>
 
     <div class="field-group">
       <label data-i18n="block.markdown_pdf.output_label">Output PDF file</label>
@@ -67,4 +70,8 @@
     {{ runtime_html }}
     {{ error_html }}
   </section>
+  <footer class="modal-actions markdown-pdf-modal-footer">
+    <button type="button" class="ghost-btn" data-block-modal-close data-i18n="ui.block_kit.cancel">Cancel</button>
+    <button type="button" class="solid-btn" data-block-apply disabled data-i18n="ui.block_kit.apply">Apply</button>
+  </footer>
 </div>

@@ -63,8 +63,20 @@
   "ui_assets": {
     "modal": [
       {
+        "kind": "css",
+        "path": "assets/css/block_modal.css"
+      },
+      {
         "kind": "js",
         "path": "assets/js/block_modal.js"
+      },
+      {
+        "kind": "css",
+        "path": "assets/css/properties.css"
+      },
+      {
+        "kind": "js",
+        "path": "assets/js/properties.js"
       }
     ],
     "mini_node_card": [
@@ -75,6 +87,20 @@
       {
         "kind": "js",
         "path": "mini/node_card.js"
+      }
+    ],
+    "inspector_panel": [
+      {
+        "kind": "js",
+        "path": "assets/js/properties_mount.js"
+      },
+      {
+        "kind": "css",
+        "path": "assets/css/properties.css"
+      },
+      {
+        "kind": "js",
+        "path": "assets/js/properties.js"
       }
     ]
   }

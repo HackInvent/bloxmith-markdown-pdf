@@ -1,3 +1,5 @@
+import { withProperties } from "./properties.js";
+
 /**
  * Activate one Markdown PDF modal tab without replacing the modal content.
  *
@@ -24,7 +26,7 @@ function activateTab(root, tabName) {
  * @param {HTMLElement} root - Mounted Markdown PDF modal root.
  * @param {object} api - Generic block UI API.
  */
-export function mount(root, api = {}) {
+function mountOwned(root, api = {}) {
   const activeTab = root.querySelector("[data-block-modal-tab].is-active")?.getAttribute("data-block-modal-tab") || "attributes";
   activateTab(root, activeTab);
 
@@ -41,4 +43,9 @@ export function mount(root, api = {}) {
       api.close?.();
     }
   });
+}
+
+/** Keep the block behavior and add properties-only accessibility. */
+export function mount(root, ...args) {
+  return withProperties(mountOwned).call(this, root, ...args);
 }
