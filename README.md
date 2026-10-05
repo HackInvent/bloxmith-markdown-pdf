@@ -19,6 +19,15 @@ Convert Markdown input to a PDF file with `pandoc`.
 
 The PDF is written inside the open project's directory. Relative paths resolve from that directory; paths escaping it are rejected.
 
+Conversion writes into a private staging directory on the destination filesystem.
+Only a successful Pandoc result with a PDF signature replaces the configured file,
+atomically. Conversion errors, missing/invalid output, timeout and cancellation
+observed before publication leave the previous file untouched and emit no PDF path.
+Temporary Markdown and staged output are cleaned up. Completed files use private
+permissions (0600). This signature check is not a full PDF conformance audit.
+Concurrent successful conversions to the same configured path remain last-writer-wins;
+use separate destinations for independently retained documents.
+
 ## Configuration
 
 | Field | Default | Meaning |

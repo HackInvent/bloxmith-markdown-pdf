@@ -49,6 +49,7 @@ class MarkdownPdfBlockError(ValueError):
 # FB2 - Fail explicitly when Pandoc or required execution configuration is unavailable.
 # FB3 - Convert non-empty Markdown into a scoped PDF file and emit its path.
 # FB4 - Preserve the same conversion contract in centralized and zeromq_active runtimes.
+# FB5 - Publish atomically after conversion, preserving the previous PDF on failure or cancellation.
 class MarkdownPdfBlock(BlockDefinition):
     """Convert Markdown text received from the graph into a PDF file.
 
@@ -180,20 +181,43 @@ class MarkdownPdfBlock(BlockDefinition):
         temp_markdown_path: Path | None = None
         try:
             temp_markdown_path = self._write_temp_markdown(output_path.parent, markdown)
-            command = self._pandoc_command(
-                pandoc_binary=pandoc_binary,
-                markdown_path=temp_markdown_path,
-                output_path=output_path,
-                config=config,
-            )
-            logs.append(f"[markdown-pdf] {context.node_id}: commande={' '.join(command)}")
-            completed = subprocess.run(
-                command,
-                capture_output=True,
-                text=True,
-                timeout=config["timeout_sec"],
-                check=False,
-            )
+            # Pandoc must never truncate the last valid document on a failed attempt.
+            # Scratch lives on the destination filesystem so publication is atomic.
+            with tempfile.TemporaryDirectory(prefix=".markdown_pdf_stage_", dir=output_path.parent) as scratch:
+                staged_pdf = Path(scratch) / "document.pdf"
+                command = self._pandoc_command(
+                    pandoc_binary=pandoc_binary,
+                    markdown_path=temp_markdown_path,
+                    output_path=staged_pdf,
+                    config=config,
+                )
+                logs.append(f"[markdown-pdf] {context.node_id}: commande={' '.join(command)}")
+                completed = subprocess.run(
+                    command,
+                    capture_output=True,
+                    text=True,
+                    timeout=config["timeout_sec"],
+                    check=False,
+                )
+                if completed.stdout.strip():
+                    logs.append(completed.stdout.strip())
+                if completed.stderr.strip():
+                    logs.append(completed.stderr.strip())
+                if completed.returncode != 0:
+                    error = f"Pandoc failed with code {completed.returncode}."
+                    logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
+                    return self._failed(error, logs, exit_code=completed.returncode, metadata={"reason": "pandoc_failed"})
+                if staged_pdf.is_symlink() or not staged_pdf.is_file() or staged_pdf.stat().st_size <= 5:
+                    return self._failed("Pandoc did not produce a usable PDF file.", logs, metadata={"reason": "missing_pdf"})
+                with staged_pdf.open("rb") as handle:
+                    if handle.read(5) != b"%PDF-":
+                        return self._failed("Pandoc output is not a PDF file.", logs, metadata={"reason": "missing_pdf"})
+                    os.fsync(handle.fileno())
+                cancelled = (getattr(context, "services", {}) or {}).get("cancel_requested")
+                if callable(cancelled) and cancelled():
+                    return self._failed("PDF publication cancelled; previous document preserved.", logs, metadata={"reason": "cancelled"})
+                staged_pdf.chmod(0o600)
+                os.replace(staged_pdf, output_path)
         except subprocess.TimeoutExpired:
             error = f"Pandoc exceeded the {config['timeout_sec']}s timeout."
             logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
@@ -205,19 +229,6 @@ class MarkdownPdfBlock(BlockDefinition):
         finally:
             if temp_markdown_path is not None:
                 temp_markdown_path.unlink(missing_ok=True)
-
-        if completed.stdout.strip():
-            logs.append(completed.stdout.strip())
-        if completed.stderr.strip():
-            logs.append(completed.stderr.strip())
-        if completed.returncode != 0:
-            error = f"Pandoc failed with code {completed.returncode}."
-            logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
-            return self._failed(error, logs, exit_code=completed.returncode, metadata={"reason": "pandoc_failed"})
-        if not output_path.is_file() or output_path.stat().st_size <= 0:
-            error = "Pandoc did not produce a usable PDF file."
-            logs.append(f"[markdown-pdf-error] {context.node_id}: {error}")
-            return self._failed(error, logs, metadata={"reason": "missing_pdf"})
 
         size = output_path.stat().st_size
         display_path = self._relative_path(context.root_dir, output_path)
